@@ -1,0 +1,7 @@
+.item-img {
+  width: 100%;
+  aspect-ratio: 512 / 384;
+  position: relative; 
+  display: block;  /* Garante que a imagem não tenha espaço extra abaixo */
+  margin: auto;  /* Centraliza horizontalmente */
+}
