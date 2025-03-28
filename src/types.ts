@@ -11,12 +11,18 @@ export interface itemType {
 }
 
 export interface CardProps {
-  listingId: string,
-  state: string,
-  price: string
-  item: itemType,
+    listing: Listing
 }
 
 export interface Listing {
-  listing: CardProps
+  listingId: string;
+  state: string | null;
+  price: number;
+  seller: string | null;
+  item: itemType;
+}
+
+export interface ItemFooterInterface {
+  price: number;
+  float: number;
 }

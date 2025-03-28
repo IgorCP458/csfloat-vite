@@ -1,11 +1,15 @@
 // API fetch helper function to make requests with headers and body
-export async function fetchApi(apiUrl: string) {
+export async function fetchApi(apiUrl: string, page: number, filters: any) {
   try {
     const response = await fetch(apiUrl, {
       method: 'POST',
       headers: {
         "Content-Type": "application/json"
       },
+      body: JSON.stringify({
+        page: page,
+        filters: filters
+      })
     })
 
 
@@ -14,8 +18,6 @@ export async function fetchApi(apiUrl: string) {
     }
 
     const responseJson = await response.json()
-    
-    console.log( await responseJson)
     return await responseJson;
   } catch (error) {
     console.error('Erro na API:', error);

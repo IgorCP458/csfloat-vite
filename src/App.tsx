@@ -2,43 +2,66 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import { fetchApi } from './utils/fetchApi'
 import Card from './components/Card/Card'
-import type { itemType } from './types'
-
-interface dataType {
-  listingId: string,
-  state: string,
-  price: string
-  item: itemType,
-}
+import type { Listing } from './types'
+import Navbar from './components/Navbar/Navbar'
 
 interface ResponseInterface {
-  data: dataType[]
+  data: Listing[]
 }
 
 function App() {
-  const [response, setResponse] = useState<ResponseInterface>({data: []})
+  const [items, setItems] = useState<any[]>([])
+  const [page, setPage] = useState<number>(1)
   const apiUrl = 'http://localhost:3000/items'
   
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await fetchApi(apiUrl)
-        setResponse(result)
+        const filters = {}
+        const result = await fetchApi(apiUrl, page, filters)
+        setItems(result.data)
       } catch (error) {
         console.log("Erro ao buscar dados:", error)
       }
     }
     fetchData()
+
   }, [])
 
+  const fetchItems = async (page: number, filters = {}) => {
+    try {
+      const data = await fetchApi(apiUrl, page + 1, filters)
+      if (Array.isArray(data.data)) {
+        setItems((prevItems) => {
+          if (!Array.isArray(prevItems)) {
+            console.error("prevItems não é um array", prevItems);
+            return [...data.data]; // Se não for um array, substitui o valor por data.data.
+          }
+          
+          // Se for um array, faz o append
+          setPage(page +1)
+          return [...prevItems, ...data.data];
+        });
+      } else {
+        console.error("Os dados recebidos não são um array.");
+      }
+    } catch (error) {
+      console.log("erro ao adicionar itens")
+    }
+  }
+
   return ( 
-    <div className='w-[100vw] max-w-screen'>
+    <div className='w-[100vw] max-w-screen text-white'>
+      <Navbar></Navbar>
       <h1>CS-Float App</h1>
       <ul className='flex flex-wrap gap-4 justify-center p-4'>
-        {response?.data?.map((entry, index) => (
-          <li key={index}><Card listing={entry}></Card></li>
+        {items?.map((entry, index) => (
+          <li key={index}>
+            <Card listing={entry}></Card>
+          </li>
         ))}
       </ul>
+        <button onClick={() => fetchItems(page)}>Carregar mais</button>
     </div>
   )
 }
