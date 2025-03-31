@@ -4,6 +4,7 @@ import { fetchApi } from './utils/fetchApi'
 import Card from './components/Card/Card'
 import type { Listing } from './types'
 import Navbar from './components/Navbar/Navbar'
+import { Button } from './components/ui/button'
 
 interface ResponseInterface {
   data: Listing[]
@@ -51,7 +52,7 @@ function App() {
   }
 
   return ( 
-    <div className='w-[100vw] max-w-screen text-white'>
+    <div className='w-[100vw] max-w-screen text-white pb-10'>
       <Navbar></Navbar>
       <h1>CS-Float App</h1>
       <ul className='flex flex-wrap gap-4 justify-center p-4'>
@@ -61,7 +62,7 @@ function App() {
           </li>
         ))}
       </ul>
-        <button onClick={() => fetchItems(page)}>Carregar mais</button>
+        <Button variant={'outline'} className="text-white bg-gray-800 border-white" onClick={() => fetchItems(page)}>Carregar mais</Button>
     </div>
   )
 }

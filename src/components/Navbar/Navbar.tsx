@@ -6,15 +6,15 @@ export default function Navbar() {
   const [currency, setCurrency] = useState("USD");
 
   return (
-    <nav className="w-full bg-gray-900 text-white p-4 flex justify-between items-center">
+    <nav className="w-full bg-gray-900 text-white p-4 flex justify-between items-center px-8">
       {/* Esquerda - Market */}
-      <div className="text-xl font-bold">Market</div>
+      <div className="text-xl font-bold p-4 transition-transform duration-300 hover:scale-105 hover:shadow-xl cursor-pointer"><a className="text-white" href="/">Market</a></div>
       
       {/* Direita - Moeda e Login */}
       <div className="flex items-center gap-4">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="text-black bg-slay-900 border-white">
+            <Button variant="outline" className="text-white bg-gray-800 border-white">
               {currency}
             </Button>
           </DropdownMenuTrigger>
