@@ -4,6 +4,7 @@ import ItemImage from "./ItemImage";
 import ItemFooter from "./ItemFooter";
 import type { CardProps } from "../../types";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import DialogListing from "../Dialog/DialogListing";
 
 
 const Card: React.FC<CardProps> = ({ listing }) => {
@@ -33,13 +34,15 @@ const Card: React.FC<CardProps> = ({ listing }) => {
       </DialogTrigger>
 
       {/* ✅ Modal agora funciona corretamente */}
-      <DialogContent className="h-200 w-200">
+      <DialogContent className="bg-transparent backdrop-blur-lg p-6 rounded-lg shadow-lg max-w-md w-full text-white h-200">
         <DialogHeader>
-          <DialogTitle>{listing.item.market_hash_name}</DialogTitle>
+          <DialogTitle className={'item-name text-[13px] ' + (listing.item.is_stattrak? 'text-[#ff782c]' : (listing.item.is_souvenir? 'text-[#e0e051]' : 'text-[#fff]'))}>{listing.item.market_hash_name}</DialogTitle>
           <DialogDescription>
             This action cannot be undone. This will permanently delete your account
             and remove your data from our servers.
           </DialogDescription>
+          <DialogListing listing={listing}></DialogListing>
+
         </DialogHeader>
       </DialogContent>
     </Dialog>
